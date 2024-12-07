@@ -20,8 +20,16 @@
           {{ name }}
         </div>
         <div class="sep"></div>
-        <div class="color-text code">
+        <div
+          class="color-text code"
+          @click="
+            (event) => {
+              copyCode(clr, event);
+            }
+          "
+        >
           {{ clr }}
+          <div class="overlay"><div class="overlay-text">Copied!</div></div>
         </div>
       </div>
     </div>
@@ -99,7 +107,7 @@ html {
 
 .color-container {
   display: flex;
-  height: 295px;
+  height: 250px;
   width: 200px;
   margin: 10px;
   justify-content: start;
@@ -140,10 +148,54 @@ html {
 .code {
   font-family: 'Consolas' !important;
   background-color: #282c34;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #41a7fc;
+  overflow: hidden;
+  width: 100%;
+  height: 0;
+  transition: 0.2s ease;
+}
+
+.overlay-text {
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.overlay-show {
+  height: 100%;
 }
 </style>
 
 <script setup lang="ts">
+function copyCode(str: string, event: MouseEvent) {
+  (event.target as HTMLElement)
+    .querySelector('.overlay')
+    ?.classList.add('overlay-show');
+
+  setTimeout(() => {
+    (event.target as HTMLElement)
+      .querySelector('.overlay')
+      ?.classList.remove('overlay-show');
+  }, 500);
+
+  navigator.clipboard.writeText(str);
+}
+
 const themes = ref({
   dark: {
     black: '#181a1f',

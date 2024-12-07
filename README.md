@@ -1,6 +1,6 @@
 # One dark color viewer
 
-This is a small web app made for those who wondering how does the colors of one dark atom theme look like.
+This is a small web app based on nuxt js made for those who are wondering, how does the colors of one dark atom theme look like.
 
 ![preview](image.png)
 
