@@ -49,7 +49,8 @@
   border-radius: 10px;
   overflow: hidden;
 }
-palette .theme-btn {
+
+.theme-btn {
   height: 100%;
   background-color: transparent;
   color: white;
@@ -98,7 +99,7 @@ html {
 
 .color-container {
   display: flex;
-  height: 300px;
+  height: 295px;
   width: 200px;
   margin: 10px;
   justify-content: start;
@@ -111,11 +112,11 @@ html {
 
 .color-wrap {
   display: flex;
-  flex: 0 0 20%;
   justify-self: center;
   justify-content: space-evenly;
   align-content: space-evenly;
   flex-wrap: wrap;
+  flex-basis: 90%;
 }
 
 .color-display {
