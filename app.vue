@@ -15,7 +15,21 @@
     </div>
     <div class="color-wrap">
       <div class="color-container" v-for="(clr, name) in themes[curTheme]">
-        <div class="color-display" :style="{ backgroundColor: clr }"></div>
+        <div class="color-display" :style="{ backgroundColor: clr }">
+          <div class="overlay">
+            <div
+              class="overlay-text"
+              style="font-family: 'Consolas'; font-size: 30px; cursor: pointer"
+              @click="
+                (event) => {
+                  copyLarge(clr, event);
+                }
+              "
+            >
+              {{ clr }}
+            </div>
+          </div>
+        </div>
         <div class="color-text">
           {{ name }}
         </div>
@@ -116,22 +130,32 @@ html {
   flex-wrap: wrap;
   box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.2),
     0 3px 14px 2px rgba(0, 0, 0, 0.14), 0 5px 5px -3px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
 }
 
 .color-wrap {
   display: flex;
   justify-self: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-content: space-evenly;
   flex-wrap: wrap;
   flex-basis: 90%;
 }
 
 .color-display {
-  border-radius: 20px 20px 0 0;
   display: flex;
   flex: 0 0 70%;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.color-display .overlay {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.color-display:hover .overlay {
+  height: 100%;
 }
 
 .color-text {
@@ -182,6 +206,14 @@ html {
 </style>
 
 <script setup lang="ts">
+function copyLarge(str: string, event: MouseEvent) {
+  (event.target as HTMLElement).textContent = 'Copied!';
+  setTimeout(() => {
+    (event.target as HTMLElement).textContent = str;
+  }, 700);
+  navigator.clipboard.writeText(str);
+}
+
 function copyCode(str: string, event: MouseEvent) {
   (event.target as HTMLElement)
     .querySelector('.overlay')
